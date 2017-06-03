@@ -10,3 +10,5 @@ router.get('/', (req, res) => {
       res.json(farewells)
     })
 })
+
+module.exports = router

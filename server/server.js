@@ -22,6 +22,6 @@ server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
 
 server.use('/api/greetings', greetings)
-// server.use('/api/farewells', farewells)
+server.use('/api/farewells', farewells)
 
 module.exports = server
