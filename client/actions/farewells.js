@@ -7,6 +7,14 @@ export const receiveFarewells = (farewells) => {
   }
 }
 
+
+export const hideFarewells = () => {
+  return {
+    type: 'HIDE_FAREWELLS'
+  }
+}
+
+
 export function getFarewells () {
   return (dispatch) => {
     request

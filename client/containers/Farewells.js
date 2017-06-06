@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {getFarewells} from '../actions/farewells'
+import {getFarewells, hideFarewells} from '../actions/farewells'
 
 const Farewells = ({farewells, dispatch}) => (
   <div>
     <button onClick={() => dispatch(getFarewells())}>Show Farewells</button>
     {farewells.map(renderFarewell)}
+    <button onClick={() => dispatch(hideFarewells())}>Close</button>
   </div>
 )
 

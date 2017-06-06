@@ -7,6 +7,19 @@ export const receiveGreetings = (greetings) => {
   }
 }
 
+export const hideGreetings = () => {
+  return {
+    type: 'HIDE_GREETINGS'
+  }
+}
+
+export const inputGreetings = (newGreeting) => {
+  return {
+    type: 'INPUT_GREETING',
+    newGreeting
+  }
+}
+
 export function getGreetings () {
   return (dispatch) => {
     request

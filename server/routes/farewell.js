@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-var farewellsDb = require ('../db/farewells')
+var farewellsDb = require ('../db/farewell')
 
 router.get('/', (req, res) => {
   let db = req.app.get('db')

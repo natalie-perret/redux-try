@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {getGreetings} from '../actions/greetings'
+import {getGreetings, hideGreetings} from '../actions/greetings'
 
 const Greetings = ({greetings, dispatch}) => (
   <div>
     <button onClick={() => dispatch(getGreetings())}>Show Greetings</button>
     {greetings.map(renderGreeting)}
+    <button onClick={() => dispatch(hideGreetings())}>Close</button>
   </div>
 )
 

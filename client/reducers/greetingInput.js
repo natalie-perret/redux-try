@@ -4,6 +4,8 @@ function greetings (state = [], action) {
       return [...action.greetings]
     case 'HIDE_GREETINGS':
       return []
+    case 'INPUT_GREETING':
+      return [...action.newGreeting]
     default:
       return state
   }

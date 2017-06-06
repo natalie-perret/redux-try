@@ -11,4 +11,12 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/add-greeting', (req, res) => {
+  let db = req.app.get('db')
+  greetingsDb.addGreeting(req.body, db)
+    .then(newGreeting => {
+      res.json(newGreeting)
+    })
+})
+
 module.exports = router

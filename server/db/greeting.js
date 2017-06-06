@@ -3,6 +3,11 @@ const getGreetings = (db) => {
     .select('*')
 }
 
+const addGreeting = (newGreeting, db) => {
+  return db('greetings').insert(newGreeting)
+}
+
 module.exports = {
-  getGreetings
+  getGreetings,
+  addGreeting
 }
