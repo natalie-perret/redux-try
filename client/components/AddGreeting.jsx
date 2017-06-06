@@ -1,12 +1,24 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
-const AddGreeting = () => (
-  <div>
-    <form action='/add-greeting'>
-      <input type="text" />
-      <input type="submit" value="Submit" />
+import {inputGreeting, postGreeting} from '../actions/greetings'
+
+function submit(e, dispatch, addGreeting) {
+  e.preventDefault()
+  dispatch(postGreeting(addGreeting))
+}
+
+const AddGreeting = ({dispatch, addGreeting}) => (
+    <form>
+      <input type="text" onChange={(e) => dispatch(inputGreeting(e.target.value))}/>
+      <input type="submit" onClick={(e) => submit(e, dispatch, addGreeting)} />
     </form>
-  </div>
 )
 
-export default AddGreeting
+function mapStateToProps(state) {
+  return {
+    addGreeting: state.addGreeting
+  }
+}
+
+export default connect(mapStateToProps)(AddGreeting)

@@ -13,9 +13,16 @@ export const hideGreetings = () => {
   }
 }
 
-export const inputGreetings = (newGreeting) => {
+export const inputGreeting = (newGreeting) => {
   return {
     type: 'INPUT_GREETING',
+    newGreeting
+  }
+}
+
+export const addGreeting = (newGreeting) => {
+  return {
+    type: 'ADD_GREETING',
     newGreeting
   }
 }
@@ -32,4 +39,22 @@ export function getGreetings () {
         dispatch(receiveGreetings(res.body))
       })
   }
+}
+
+export function postGreeting (greetingText) {
+  return (dispatch) => {
+    console.log({greetingText});
+    request
+    .post('/api/greetings')
+    .send({greetingText})
+    .end((err,res)=>{
+      console.log({err, res});
+      let newGreeting = {
+        text: greetingText,
+        id: res.body
+      }
+      if (!err) dispatch(addGreeting(newGreeting))
+    })
+  }
+
 }

@@ -11,11 +11,12 @@ router.get('/', (req, res) => {
     })
 })
 
-router.post('/add-greeting', (req, res) => {
+router.post('/', (req, res) => {
+  console.log(req.body);
   let db = req.app.get('db')
-  greetingsDb.addGreeting(req.body, db)
+  greetingsDb.addGreeting(req.body.greetingText, db)
     .then(newGreeting => {
-      res.json(newGreeting)
+      res.json(newGreeting[0])
     })
 })
 

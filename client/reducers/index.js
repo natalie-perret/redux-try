@@ -2,11 +2,11 @@ import {combineReducers} from 'redux'
 
 import greetings from './greetings'
 import farewells from './farewells'
-import greetingInput from './greetingInput'
+import addGreeting from './addGreeting'
 
 
 export default combineReducers({
   greetings,
   farewells,
-  greetingInput
+  addGreeting
 })

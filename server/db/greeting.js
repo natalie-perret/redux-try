@@ -3,8 +3,8 @@ const getGreetings = (db) => {
     .select('*')
 }
 
-const addGreeting = (newGreeting, db) => {
-  return db('greetings').insert(newGreeting)
+const addGreeting = (text, db) => {
+  return db('greetings').insert({text})
 }
 
 module.exports = {

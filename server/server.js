@@ -7,6 +7,8 @@ const cors = require('cors')
 var greetings = require('./routes/greeting')
 var farewells = require('./routes/farewell')
 
+var server = express()
+server.use(bodyParser.json())
 
 const corsOptions = {
   origin: true,
@@ -15,10 +17,8 @@ const corsOptions = {
   credentials: true
 }
 
-var server = express()
 server.use(cors(corsOptions))
 
-server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
 
 server.use('/api/greetings', greetings)
