@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  console.log(req.body);
   let db = req.app.get('db')
   greetingsDb.addGreeting(req.body.greetingText, db)
     .then(newGreeting => {

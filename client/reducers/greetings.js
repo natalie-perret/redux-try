@@ -5,9 +5,7 @@ function greetings (state = [], action) {
     case 'HIDE_GREETINGS':
       return []
     case 'ADD_GREETING':
-    console.log(action.newGreeting);
       state.push(action.newGreeting)
-      console.log(state);
       return state
     default:
       return state

@@ -6913,7 +6913,6 @@ function getGreetings() {
 
 function postGreeting(greetingText) {
   return function (dispatch) {
-    console.log({ greetingText: greetingText });
     _superagent2.default.post('/api/greetings').send({ greetingText: greetingText }).end(function (err, res) {
       console.log({ err: err, res: res });
       var newGreeting = {
@@ -12137,12 +12136,17 @@ var _addGreeting = __webpack_require__(108);
 
 var _addGreeting2 = _interopRequireDefault(_addGreeting);
 
+var _addFarewell = __webpack_require__(240);
+
+var _addFarewell2 = _interopRequireDefault(_addFarewell);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
   greetings: _greetings2.default,
   farewells: _farewells2.default,
-  addGreeting: _addGreeting2.default
+  addGreeting: _addGreeting2.default,
+  addFarewell: _addFarewell2.default
 });
 
 /***/ }),
@@ -12194,8 +12198,9 @@ exports['default'] = thunk;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.hideFarewells = exports.receiveFarewells = undefined;
+exports.addFarewell = exports.inputFarewell = exports.hideFarewells = exports.receiveFarewells = undefined;
 exports.getFarewells = getFarewells;
+exports.postFarewell = postFarewell;
 
 var _superagent = __webpack_require__(96);
 
@@ -12216,6 +12221,20 @@ var hideFarewells = exports.hideFarewells = function hideFarewells() {
   };
 };
 
+var inputFarewell = exports.inputFarewell = function inputFarewell(newFarewell) {
+  return {
+    type: 'INPUT_FAREWELL',
+    newFarewell: newFarewell
+  };
+};
+
+var addFarewell = exports.addFarewell = function addFarewell(newFarewell) {
+  return {
+    type: 'ADD_FAREWELL',
+    newFarewell: newFarewell
+  };
+};
+
 function getFarewells() {
   return function (dispatch) {
     _superagent2.default.get('/api/farewells').end(function (err, res) {
@@ -12224,6 +12243,19 @@ function getFarewells() {
         return;
       }
       dispatch(receiveFarewells(res.body));
+    });
+  };
+}
+
+function postFarewell(farewellText) {
+  return function (dispatch) {
+    _superagent2.default.post('/api/farewells').send({ farewellText: farewellText }).end(function (err, res) {
+      console.log({ err: err, res: res });
+      var newFarewell = {
+        text: farewellText,
+        id: res.body
+      };
+      if (!err) dispatch(addFarewell(newFarewell));
     });
   };
 }
@@ -12249,7 +12281,7 @@ var _greetings = __webpack_require__(56);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function submit(e, dispatch, addGreeting) {
+function submitGreeting(e, dispatch, addGreeting) {
   e.preventDefault();
   dispatch((0, _greetings.postGreeting)(addGreeting));
 }
@@ -12264,7 +12296,7 @@ var AddGreeting = function AddGreeting(_ref) {
         return dispatch((0, _greetings.inputGreeting)(e.target.value));
       } }),
     _react2.default.createElement('input', { type: 'submit', onClick: function onClick(e) {
-        return submit(e, dispatch, addGreeting);
+        return submitGreeting(e, dispatch, addGreeting);
       } })
   );
 };
@@ -12296,6 +12328,10 @@ var _reactRedux = __webpack_require__(26);
 
 var _farewells = __webpack_require__(103);
 
+var _AddFarewell = __webpack_require__(239);
+
+var _AddFarewell2 = _interopRequireDefault(_AddFarewell);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Farewells = function Farewells(_ref) {
@@ -12318,7 +12354,8 @@ var Farewells = function Farewells(_ref) {
           return dispatch((0, _farewells.hideFarewells)());
         } },
       'Close'
-    )
+    ),
+    _react2.default.createElement(_AddFarewell2.default, null)
   );
 };
 
@@ -12375,14 +12412,14 @@ var Greetings = function Greetings(_ref) {
       'Show Greetings'
     ),
     greetings.map(renderGreeting),
-    _react2.default.createElement(_AddGreeting2.default, null),
     _react2.default.createElement(
       'button',
       { onClick: function onClick() {
           return dispatch((0, _greetings.hideGreetings)());
         } },
       'Close'
-    )
+    ),
+    _react2.default.createElement(_AddGreeting2.default, null)
   );
 };
 
@@ -12460,10 +12497,8 @@ function addGreeting() {
 
   switch (action.type) {
     case 'INPUT_GREETING':
-      console.log(action.newGreeting);
       return action.newGreeting;
     default:
-      console.log("please no");
       return state;
   }
 }
@@ -12492,6 +12527,9 @@ function farewells() {
       return [].concat(_toConsumableArray(action.farewells));
     case 'HIDE_FAREWELLS':
       return [];
+    case 'ADD_FAREWELL':
+      state.push(action.newFarewell);
+      return state;
     default:
       return state;
   }
@@ -12522,9 +12560,7 @@ function greetings() {
     case 'HIDE_GREETINGS':
       return [];
     case 'ADD_GREETING':
-      console.log(action.newGreeting);
       state.push(action.newGreeting);
-      console.log(state);
       return state;
     default:
       return state;
@@ -26422,6 +26458,80 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(14);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(26);
+
+var _farewells = __webpack_require__(103);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function submitFarewell(e, dispatch, addFarewell) {
+  e.preventDefault();
+  dispatch((0, _farewells.postFarewell)(addFarewell));
+}
+
+var AddFarewell = function AddFarewell(_ref) {
+  var dispatch = _ref.dispatch,
+      addFarewell = _ref.addFarewell;
+  return _react2.default.createElement(
+    'form',
+    null,
+    _react2.default.createElement('input', { type: 'text', onChange: function onChange(e) {
+        return dispatch((0, _farewells.inputFarewell)(e.target.value));
+      } }),
+    _react2.default.createElement('input', { type: 'submit', onClick: function onClick(e) {
+        return submitFarewell(e, dispatch, addFarewell);
+      } })
+  );
+};
+
+function mapStateToProps(state) {
+  return {
+    addFarewell: state.addFarewell
+  };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(AddFarewell);
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function addFarewell() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'INPUT_FAREWELL':
+      return action.newFarewell;
+    default:
+      return state;
+  }
+}
+
+exports.default = addFarewell;
 
 /***/ })
 /******/ ]);

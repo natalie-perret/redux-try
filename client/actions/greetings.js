@@ -43,7 +43,6 @@ export function getGreetings () {
 
 export function postGreeting (greetingText) {
   return (dispatch) => {
-    console.log({greetingText});
     request
     .post('/api/greetings')
     .send({greetingText})
@@ -56,5 +55,4 @@ export function postGreeting (greetingText) {
       if (!err) dispatch(addGreeting(newGreeting))
     })
   }
-
 }

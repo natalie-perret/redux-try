@@ -4,6 +4,9 @@ function farewells (state = [], action) {
       return [...action.farewells]
     case 'HIDE_FAREWELLS':
       return []
+    case 'ADD_FAREWELL':
+      state.push(action.newFarewell)
+      return state
     default:
       return state
   }

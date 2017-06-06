@@ -11,4 +11,12 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  let db = req.app.get('db')
+  farewellsDb.addFarewell(req.body.farewellText, db)
+    .then(newFarewell => {
+      res.json(newFarewell[0])
+    })
+})
+
 module.exports = router

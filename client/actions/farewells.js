@@ -7,13 +7,25 @@ export const receiveFarewells = (farewells) => {
   }
 }
 
-
 export const hideFarewells = () => {
   return {
     type: 'HIDE_FAREWELLS'
   }
 }
 
+export const inputFarewell = (newFarewell) => {
+  return {
+    type: 'INPUT_FAREWELL',
+    newFarewell
+  }
+}
+
+export const addFarewell = (newFarewell) => {
+  return {
+    type: 'ADD_FAREWELL',
+    newFarewell
+  }
+}
 
 export function getFarewells () {
   return (dispatch) => {
@@ -25,6 +37,22 @@ export function getFarewells () {
         return
       }
       dispatch(receiveFarewells(res.body))
+    })
+  }
+}
+
+export function postFarewell (farewellText) {
+  return (dispatch) => {
+    request
+    .post('/api/farewells')
+    .send({farewellText})
+    .end((err,res)=>{
+      console.log({err, res});
+      let newFarewell = {
+        text: farewellText,
+        id: res.body
+      }
+      if (!err) dispatch(addFarewell(newFarewell))
     })
   }
 }

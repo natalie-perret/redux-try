@@ -3,6 +3,11 @@ const getFarewells = (db) => {
     .select('*')
 }
 
+const addFarewell = (text, db) => {
+  return db('farewells').insert({text})
+}
+
 module.exports = {
-  getFarewells
+  getFarewells,
+  addFarewell
 }
